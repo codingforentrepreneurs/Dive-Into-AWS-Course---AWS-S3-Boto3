@@ -7,10 +7,10 @@ AWS_DEFAULT_REGION = 'us-east-1'
 AWS_BUCKET_NAME = 'aws-cfe-intro'
 
 session = boto3.Session(
-	aws_access_key_id=AWS_ACCESS_KEY_ID,
-	aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-	region_name=AWS_DEFAULT_REGION
-	)
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_DEFAULT_REGION
+    )
 
 s3 = session.resource("s3")
 
@@ -20,12 +20,19 @@ s3 = session.resource("s3")
 
 bucket = s3.Bucket(name=AWS_BUCKET_NAME)
 
-for obj in bucket.objects.all(): # Django' Model.objects.all()
-	print(obj.key)
-	print(obj.Acl().load())
-
-
 object_key = 'abc/img/Screen Shot 2018-12-02 at 11.58.02 AM.png'
-object_acl = s3.ObjectAcl(AWS_BUCKET_NAME, object_key)
+    for obj in bucket.objects.all(): # Django' Model.objects.all()
+        print(obj.key)
+        if obj.key == object_key:
+        obj.Acl().put(ACL='public-read')
+        print(obj.Acl().load())
+
+
+
+# object_acl = s3.ObjectAcl(AWS_BUCKET_NAME, object_key)
+
+# object_acl.put(ACL='public-read')
+# print(object_acl.load())
+
 
 
