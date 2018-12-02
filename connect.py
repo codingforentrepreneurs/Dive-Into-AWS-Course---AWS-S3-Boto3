@@ -14,17 +14,18 @@ session = boto3.Session(
 
 s3 = session.resource("s3")
 
-for bucket in s3.buckets.all():
-	print(bucket.name)
+# for bucket in s3.buckets.all():
+# 	print(bucket.name)
 
 
 bucket = s3.Bucket(name=AWS_BUCKET_NAME)
 
 for obj in bucket.objects.all(): # Django' Model.objects.all()
-	print(obj)
+	print(obj.key)
+	print(obj.Acl().load())
 
 
-
-
+object_key = 'abc/img/Screen Shot 2018-12-02 at 11.58.02 AM.png'
+object_acl = s3.ObjectAcl(AWS_BUCKET_NAME, object_key)
 
 
