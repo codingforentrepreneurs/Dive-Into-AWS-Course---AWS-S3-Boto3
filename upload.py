@@ -22,7 +22,7 @@ bucket = s3.Bucket(name=AWS_BUCKET_NAME)
 
 file_path = os.path.join(IMAGE_DIR, '1.png')
 key_name = '1.png'
-bucket.upload_file(file_path, '1.png', Callback=)
+bucket.upload_file(file_path, '1.png')
 
 
 
