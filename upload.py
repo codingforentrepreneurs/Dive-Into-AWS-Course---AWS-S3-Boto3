@@ -1,6 +1,9 @@
 # https://kirr.co/bnk7dx
 import boto3
 import os
+import sys
+import threading
+
 
 BASE_DIR = os.getcwd()
 IMAGE_DIR = os.path.join(BASE_DIR, 'images')
@@ -22,8 +25,30 @@ bucket = s3.Bucket(name=AWS_BUCKET_NAME)
 
 file_path = os.path.join(IMAGE_DIR, '1.png')
 key_name = '1.png'
-bucket.upload_file(file_path, '1.png')
 
 
+
+
+class ProgressPercentage(object):
+    def __init__(self, filename):
+        self._filename = filename
+        self._size = float(os.path.getsize(filename))
+        self._seen_so_far = 0
+        self._lock = threading.Lock()
+    def __call__(self, bytes_amount):
+        # To simplify we'll assume this is hooked up
+        # to a single filename.
+        with self._lock:
+            self._seen_so_far += bytes_amount
+            percentage = (self._seen_so_far / self._size) * 100
+            sys.stdout.write(
+                "\r%s  %s / %s  (%.2f%%)" % (
+                    self._filename, self._seen_so_far, self._size,
+                    percentage))
+            sys.stdout.flush()
+
+
+
+bucket.upload_file(file_path, '1.png', Callback=ProgressPercentage(file_path))
 
 
