@@ -49,24 +49,26 @@ class ProgressPercentage(object):
 
 
 
-# bucket.upload_file(file_path, 
-#     '1.png', 
-#     Callback=ProgressPercentage(file_path)
-#     )
+bucket.upload_file(file_path, 
+    '1.png', 
+    ExtraArgs={'ACL': 'public-read'},
+    Callback=ProgressPercentage(file_path)
+    )
 
 
 # with open(file_path, 'rb') as data:
 #     bucket.upload_fileobj(data,
 #         '1.png',
+#         ExtraArgs={'ACL': 'public-read'},
 #         Callback=ProgressPercentage(file_path)
 #         )
 
-with open(file_path, 'rb') as data:
-    bucket.put_object(
-        ACL='private',
-        Body= data,
-        Key='1-acl.png'
-        )
+# with open(file_path, 'rb') as data:
+#     bucket.put_object(
+#         ACL='private',
+#         Body= data,
+#         Key='1-acl.png'
+#         )
 
 
 
