@@ -24,7 +24,7 @@ object_key = 'abc/img/Screen Shot 2018-12-02 at 11.58.02 AM.png'
     for obj in bucket.objects.all(): # Django' Model.objects.all()
         print(obj.key)
         if obj.key == object_key:
-        obj.Acl().put(ACL='public-read')
+            obj.Acl().put(ACL='public-read')
         print(obj.Acl().load())
 
 
