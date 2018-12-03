@@ -20,4 +20,14 @@ s3 = session.resource("s3")
 bucket = s3.Bucket(name=AWS_BUCKET_NAME)
 
 
+def get_s3_client():
+    s3 = boto3.client(
+        's3',
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_DEFAULT_REGION
+    )
+    return s3
+
+
 
