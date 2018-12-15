@@ -8,7 +8,7 @@ copy_source = {
 }
 
 
-obj = bucket.Object('uploads/2.png')
+obj = bucket.Object('uploads/4.png')
 obj.copy(copy_source)
 
 old_obj = bucket.Object('upload.png').delete()
